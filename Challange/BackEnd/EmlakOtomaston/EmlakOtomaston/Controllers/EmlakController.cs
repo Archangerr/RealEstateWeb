@@ -77,19 +77,23 @@ namespace EmlakOtomaston.Controllers
             return Ok(response);
         }
 
-        [Authorize(Roles = UserRoles.User)]
+        //[Authorize(Roles = UserRoles.User)]
+        [AllowAnonymous]
         [HttpGet]
         [Route("Filtered")]
-        public IActionResult GetFilteredProducts([FromQuery] EmlakSearchModel searchModel)
+        public IActionResult GetFilteredEmlaks([FromQuery] EmlakSearchModel searchModel)
         {
-            var result = FilterProducts(searchModel);
+            var result = FilterEmlaks(searchModel);
             return Ok(result);
         }
 
-        private List<Emlak> FilterProducts(EmlakSearchModel searchModel)
+        private IQueryable<EmlakDetailsDTO> FilterEmlaks(EmlakSearchModel searchModel)
         {
-            List<Emlak> emlaklar = new List<Emlak>();
-            IQueryable<Emlak> query = _emlakContext.Emlaklar;
+            
+            IQueryable<Emlak> query = _emlakContext.Emlaklar
+                .Include(emlak => emlak.Doviz)
+                .Include(emlak => emlak.Durumu)
+                .Include(emlak => emlak.Type);
 
             if (!string.IsNullOrWhiteSpace(searchModel.Title))
             {
@@ -120,9 +124,14 @@ namespace EmlakOtomaston.Controllers
             {
                 query = query.Where(p => p.DovizId <= searchModel.DovizId.Value);
             }
+            //var emlakDetailsList = new List<EmlakDetailsDTO>();
+            //emlakDetailsList = query.Select(emlak => new EmlakDetailsDTO(emlak)) ;
 
-            emlaklar = query.ToList();
-            return emlaklar;
+            //return emlakDetailsList;
+
+            //emlaklar = query.ToList();
+            //return query;
+            return query.Select(emlak => new EmlakDetailsDTO(emlak));
         }
 
 

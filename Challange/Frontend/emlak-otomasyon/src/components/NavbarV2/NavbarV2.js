@@ -11,6 +11,9 @@ const NavbarV2 = () => {
         <li>
         <Link to="/EmlakListing">Go Emlak </Link>
         </li>
+        <li>
+        <Link to="/Search">Search </Link>
+        </li>
         
       </ul>
     </nav>
