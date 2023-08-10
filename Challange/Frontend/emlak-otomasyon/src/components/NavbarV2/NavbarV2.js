@@ -16,6 +16,7 @@ const NavbarV2 = () => {
         </li>
         
       </ul>
+      
     </nav>
   );
 }

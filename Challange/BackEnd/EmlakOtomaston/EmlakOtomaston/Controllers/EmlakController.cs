@@ -40,6 +40,7 @@ namespace EmlakOtomaston.Controllers
             result.ForEach(emlak => emlakDetailsList.Add(new EmlakDetailsDTO(emlak)));
             return Ok(emlakDetailsList);
         }
+
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         [Route("Pagination")]
@@ -291,6 +292,17 @@ namespace EmlakOtomaston.Controllers
                 return NoContent();
             }
             return NotFound();
+        }
+
+        [Authorize(Roles = UserRoles.User)]
+        [HttpGet]
+        [Route("count/kiralik")]
+        public async Task<IActionResult> GetKiralikCount()
+        {
+            
+            var count = await _emlakContext.Emlaklar.CountAsync(emlak => emlak.Durumu.Name == "kiralik");
+
+            return Ok(new { count });
         }
 
 

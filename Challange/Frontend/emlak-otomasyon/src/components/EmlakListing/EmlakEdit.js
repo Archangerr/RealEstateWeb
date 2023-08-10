@@ -31,8 +31,7 @@ function EditEmlak() {
     
 
     useEffect(() => {
-        // Fetch the emlak data by its ID
-        // TODO: Implement the fetchSingleEmlak function in your service
+
         const fetchInitialData = async () => {
             const response = await fetchById(emlakId, config);
             const data = response[0];
@@ -56,7 +55,7 @@ function EditEmlak() {
 
         fetchInitialData();
 
-        // ... (rest of your fetching logic for dropdowns etc.)
+       
     }, []);
 
     const updateEmlak = async () => {
@@ -117,12 +116,12 @@ function EditEmlak() {
     };
 
     useEffect(() => {
-        getDoviz(); // Call fetchData when component mounts
+        getDoviz(); 
         getType();
         getDurumu();
     }, []);
 
-    // ... (rest of your component rendering code)
+   
 
     return (
         <div>

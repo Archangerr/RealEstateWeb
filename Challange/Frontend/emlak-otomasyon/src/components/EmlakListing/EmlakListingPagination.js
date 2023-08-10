@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
+import CountKiralik from '../widget/CountKiralik';
 
 function EmlakListingPagination() {
     const [data, setData] = useState([]);
@@ -35,6 +36,7 @@ const config1 = {
     return (
         <div>
             
+            <CountKiralik />
             {data.map(emlak => (
             <div key={emlak.id}>
                 <h3>{emlak.title}</h3>
