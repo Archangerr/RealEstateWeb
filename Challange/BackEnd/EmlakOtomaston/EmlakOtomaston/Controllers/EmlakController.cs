@@ -25,7 +25,7 @@ namespace EmlakOtomaston.Controllers
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         [Route("list")]
-        public async Task<IActionResult> GetAll()  // This method gets all even if its not available
+        public async Task<IActionResult> GetAll()  
         {
             var result = await _emlakContext.Emlaklar.
                 Include(emlak => emlak.Doviz).
@@ -46,26 +46,26 @@ namespace EmlakOtomaston.Controllers
         [Route("Pagination")]
         public async Task<IActionResult> GetAllPagination(int pageIndex = 0, int pageSize = 10)
         {
-            // Count the total number of records for pagination metadata
+            
             int totalCount = await _emlakContext.Emlaklar.CountAsync();
 
-            // If there's no data, return NotFound
+           
             if (totalCount == 0)
                 return NotFound();
 
-            // Retrieve the subset of records based on the current page and page size
+            
             var result = await _emlakContext.Emlaklar
                         .Include(emlak => emlak.Doviz)
                         .Include(emlak => emlak.Durumu)
                         .Include(emlak => emlak.Type)
-                        .OrderBy(emlak => emlak.Id) // Ensure consistent order; replace `Id` with your primary key
+                        .OrderBy(emlak => emlak.Id) 
                         .Skip(pageIndex * pageSize)
                         .Take(pageSize)
                         .ToListAsync();
 
             var emlakDetailsList = result.Select(emlak => new EmlakDetailsDTO(emlak)).ToList();
 
-            // (Optional) Return pagination metadata 
+            
             var response = new
             {
                 PageIndex = pageIndex,
@@ -78,8 +78,7 @@ namespace EmlakOtomaston.Controllers
             return Ok(response);
         }
 
-        //[Authorize(Roles = UserRoles.User)]
-        [AllowAnonymous]
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         [Route("Filtered")]
         public IActionResult GetFilteredEmlaks([FromQuery] EmlakSearchModel searchModel)

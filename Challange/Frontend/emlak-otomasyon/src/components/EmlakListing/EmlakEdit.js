@@ -38,12 +38,10 @@ function EditEmlak() {
             console.log("data", data);
             
             setTitle(data.title);
-            setType(data.typeId);   
-            
+            setType(data.typeId); 
             setDurumu(data.durumuId);
             setDoviz(data.dovizId);
             setFiyat(data.fiyat);
-            
             console.log("data fiyat", data.fiyat);
             console.log("fiyat", fiyat);
             setIlanTarihi(data.ilanTarihi);

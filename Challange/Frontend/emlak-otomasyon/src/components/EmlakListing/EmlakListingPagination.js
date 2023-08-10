@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 import CountKiralik from '../widget/CountKiralik';
+import { deleteEmlak } from '../../services/EmlakListingService';
 
 function EmlakListingPagination() {
     const [data, setData] = useState([]);
@@ -11,7 +12,7 @@ function EmlakListingPagination() {
     const [totalPages, setTotalPages] = useState(0);
 
     const token = localStorage.getItem('userToken');
-const config1 = {
+    const config1 = {
     headers: {
       Authorization: `Bearer ${token}`
     }
@@ -48,6 +49,10 @@ const config1 = {
                 <Link to={`/EmlakEdit/${emlak.id}`}>
                      Edit
                  </Link>
+
+                 <button onClick={() => deleteEmlak(emlak.id,config1)}>
+                        Delete
+                    </button>
                 {/* Optionally, you can display the image if it's a URL */}
                 {/* <img src={emlak.imageBase} alt={emlak.title} /> */}
             </div>
