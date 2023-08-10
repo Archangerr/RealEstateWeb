@@ -43,7 +43,9 @@ const config1 = {
                 <p>Price: {emlak.fiyat} {emlak.doviz}</p>
                 <p>Listing Date: {emlak.ilanTarihi}</p>
                 <p>Expiry Date: {emlak.ilanBitis}</p>
-                
+                <Link to={`/EmlakEdit/${emlak.id}`}>
+                     Edit
+                 </Link>
                 {/* Optionally, you can display the image if it's a URL */}
                 {/* <img src={emlak.imageBase} alt={emlak.title} /> */}
             </div>

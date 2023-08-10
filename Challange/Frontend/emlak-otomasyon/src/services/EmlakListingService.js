@@ -59,3 +59,21 @@ export async function addNewEmlak(emlakData, config) {
         throw error;
     }
 }
+
+export const editEmlak = async (emlakData, config) => {
+  try {
+      const response = await axios.put(`http://localhost:5218/Emlak`, emlakData, config);
+      return response.data;
+  } catch (error) {
+      throw error;
+  }
+}
+
+export const fetchById = async (emlakId, config) => {
+  try {
+      const response = await axios.get(`http://localhost:5218/Emlak/byId?id=${emlakId}`, config);
+      return response.data;
+  } catch (error) {
+      throw error;
+  }
+}

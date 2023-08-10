@@ -3,6 +3,7 @@ import './App.css';
 import Login from './components/Login/Login';
 import EmlakListing from './components/EmlakListing/EmlakListing';
 import EmlakListingPagination from './components/EmlakListing/EmlakListingPagination';
+import EmlakEdit from './components/EmlakListing/EmlakEdit';
 import Search from './components/Search/Search';  
 import React, { useState } from 'react';
 import Navbar from './components/NavbarV2/NavbarV2';
@@ -30,6 +31,7 @@ function App() {
           <Route path="*" element={<Navigate to="/EmlakListing" replace />} />  
           <Route path="/EmlakListingPagination" element={<EmlakListingPagination/>}/>
           <Route path="/Search" element={<Search/>}/>
+          <Route path="/EmlakEdit/:emlakId" element={<EmlakEdit />} />
          </Routes>
        </BrowserRouter>
      

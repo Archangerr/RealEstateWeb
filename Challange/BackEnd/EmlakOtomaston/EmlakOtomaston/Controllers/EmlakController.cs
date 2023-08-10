@@ -112,17 +112,17 @@ namespace EmlakOtomaston.Controllers
 
             if (searchModel.TypeId.HasValue)
             {
-                query = query.Where(p => p.TypeId <= searchModel.TypeId.Value);
+                query = query.Where(p => p.TypeId == searchModel.TypeId.Value);
             }
 
             if (searchModel.DurumuId.HasValue)
             {
-                query = query.Where(p => p.DurumuId <= searchModel.DurumuId.Value);
+                query = query.Where(p => p.DurumuId == searchModel.DurumuId.Value);
             }
 
             if (searchModel.DovizId.HasValue)
             {
-                query = query.Where(p => p.DovizId <= searchModel.DovizId.Value);
+                query = query.Where(p => p.DovizId == searchModel.DovizId.Value);
             }
             //var emlakDetailsList = new List<EmlakDetailsDTO>();
             //emlakDetailsList = query.Select(emlak => new EmlakDetailsDTO(emlak)) ;
@@ -134,6 +134,26 @@ namespace EmlakOtomaston.Controllers
             return query.Select(emlak => new EmlakDetailsDTO(emlak));
         }
 
+        [Authorize(Roles = UserRoles.User)]
+        [HttpGet]
+        [Route("byId")]
+        public async Task<IActionResult> GetEmlakById(int id)
+        {
+            var result = await _emlakContext.Emlaklar
+                .Include(emlak => emlak.Doviz)
+                .Include(emlak => emlak.Durumu)
+                .Include(emlak => emlak.Type)
+                .Where(x => x.Id == id  && x.isAvailable).ToListAsync();
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            var emlakDetailsList = new List<EmlakDetailsDTO>();
+            result.ForEach(book => emlakDetailsList.Add(new EmlakDetailsDTO(book)));
+            return Ok(emlakDetailsList);
+        }
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]
