@@ -185,6 +185,9 @@ function ParametersAdd() {
     getDoviz();
     getType();
     getDurumu();
+    setDoviz('');
+    setType('');
+    setDurumu('');
   }, [refreshData]);
 
 
@@ -233,71 +236,92 @@ function ParametersAdd() {
             </div>
           </div>
         </div>
-        <div>
-          <h3>Durumu List</h3>
-          {durumulist.map(item => (
-            <div key={item.id}>
-              {editMode === item.id ? (
-                <input
-                  type="text"
-                  value={durumu}
-                  onChange={e => setDurumu(e.target.value)}
-                />
-              ) : (
-                <p>{item.name}</p>
-              )}
 
-              {editMode === item.id ? (
-                <button onClick={() => handleSaveEditDurumu(item.id)}>Save</button>
-              ) : (
-                <>
-                  <button onClick={() => handleEditDurumu(item.id, item.name)}>Edit</button>
-                  <button onClick={() => handleDeleteDurumu(item.id)}>Delete</button>
-                </>
-              )}
+        {/* Durumu List */}
+        <div className="col-md-4">
+          <div className="card">
+            <div className="card-header">Durumu List</div>
+            <ul className="list-group list-group-flush">
+              {durumulist.map(item => (
+                <li className="list-group-item" key={item.id}>
+                  {editMode === item.id ? (
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={durumu}
+                      onChange={e => setDurumu(e.target.value)}
+                    />
+                  ) : (
+                    item.name
+                  )}
+
+                  <div className="mt-2">
+                    {editMode === item.id ? (
+                      <button className="btn btn-primary" onClick={() => handleSaveEditDurumu(item.id)}>Save</button>
+                    ) : (
+                      <>
+                        <button className="btn btn-warning" onClick={() => handleEditDurumu(item.id, item.name)}>Edit</button>
+                        <button className="btn btn-danger ms-2" onClick={() => handleDeleteDurumu(item.id)}>Delete</button>
+                      </>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div className="card-body">
+              <div className="mb-3">
+                <label className="form-label">Durumu</label>
+                <input type="text" className="form-control" value={durumu} onChange={e => setDurumu(e.target.value)} />
+              </div>
+              <button className="btn btn-success" onClick={handleAddDurumu}>Add Durumu</button>
             </div>
-          ))}
-          <label>
-            Durumu:
-            <input type="text" value={durumu} onChange={e => setDurumu(e.target.value)} />
-          </label>
-          <button onClick={handleAddDurumu}>Add Durumu</button>
-
+          </div>
         </div>
 
-        <div>
-          <h3>Doviz List</h3>
-          {dovizList.map(item => (
-            <div key={item.id}>
-              {editMode === item.id ? (
-                <input
-                  type="text"
-                  value={doviz}
-                  onChange={e => setDoviz(e.target.value)}
-                />
-              ) : (
-                <p>{item.name}</p>
-              )}
+        {/* Doviz List */}
+        <div className="col-md-4">
+          <div className="card">
+            <div className="card-header">Doviz List</div>
+            <ul className="list-group list-group-flush">
+              {dovizList.map(item => (
+                <li className="list-group-item" key={item.id}>
+                  {editMode === item.id ? (
+                    <input
+                      type="text"
+                      className="form-control"
+                      value={doviz}
+                      onChange={e => setDoviz(e.target.value)}
+                    />
+                  ) : (
+                    item.name
+                  )}
 
-              {editMode === item.id ? (
-                <button onClick={() => handleSaveEditDoviz(item.id)}>Save</button>
-              ) : (
-                <>
-                  <button onClick={() => handleEditDoviz(item.id, item.name)}>Edit</button>
-                  <button onClick={() => handleDeleteDoviz(item.id)}>Delete</button>
-                </>
-              )}
+                  <div className="mt-2">
+                    {editMode === item.id ? (
+                      <button className="btn btn-primary" onClick={() => handleSaveEditDoviz(item.id)}>Save</button>
+                    ) : (
+                      <>
+                        <button className="btn btn-warning" onClick={() => handleEditDoviz(item.id, item.name)}>Edit</button>
+                        <button className="btn btn-danger ms-2" onClick={() => handleDeleteDoviz(item.id)}>Delete</button>
+                      </>
+                    )}
+                  </div>
+                </li>
+              ))}
+            </ul>
+            <div className="card-body">
+              <div className="mb-3">
+                <label className="form-label">Doviz</label>
+                <input type="text" className="form-control" value={doviz} onChange={e => setDoviz(e.target.value)} />
+              </div>
+              <button className="btn btn-success" onClick={handleAddDoviz}>Add Doviz</button>
             </div>
-          ))}
-          <label>
-            Doviz:
-            <input type="text" value={doviz} onChange={e => setDoviz(e.target.value)} />
-          </label>
-          <button onClick={handleAddDoviz}>Add Type</button>
+          </div>
         </div>
+
       </div>
-      </div>
-      )
+    </div>
+  );
 }
 
       export default ParametersAdd
