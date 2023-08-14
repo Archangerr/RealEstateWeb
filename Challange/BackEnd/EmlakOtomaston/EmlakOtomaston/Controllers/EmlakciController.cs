@@ -20,7 +20,7 @@ namespace EmlakOtomaston.Controllers
             _emlakContext = emlakContext;
         }
 
-        [Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         [Route("list")]
         public async Task<IActionResult> GetAll()

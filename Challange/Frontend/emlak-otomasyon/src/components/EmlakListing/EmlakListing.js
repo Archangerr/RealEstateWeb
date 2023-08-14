@@ -54,7 +54,7 @@ export default function EmlakListing()
             ))}
             <br />
             <h2>Add Emlak</h2>
-            <EmlakAdd refreshEmlakList={() => setRefreshKey(prevKey => prevKey + 1)} />
+            {/* <EmlakAdd refreshEmlakList={() => setRefreshKey(prevKey => prevKey + 1)} /> */}
             {/* Add Emlak logic here */}
         </div>
     );

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+
 import { fetchSearch, searchService } from '../../services/SearchService';
+import React, { useEffect, useState, useContext } from 'react';
 
 function Search() {
     const token = localStorage.getItem('userToken'); // Access the token

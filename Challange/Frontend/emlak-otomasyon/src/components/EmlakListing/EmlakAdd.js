@@ -9,11 +9,11 @@ function EmlakAdd({refreshEmlakList }) {
 
     const [title, setTitle] = useState('');
     const [typeList, setTypeList] = useState([]);
-    const [type, setType] = useState(1);
+    const [type, setType] = useState();
     const [durumulist, setDurumulist] = useState([]);
-    const [durumu, setDurumu] = useState(1);
+    const [durumu, setDurumu] = useState();
     const [dovizList, setDovizList] = useState([]);
-    const [doviz, setDoviz] = useState(1);
+    const [doviz, setDoviz] = useState();
     const [fiyat, setFiyat] = useState(1);
     const [ilanTarihi, setIlanTarihi] = useState(new Date().toISOString());
     const [ilanBitis, setIlanBitis] = useState(new Date().toISOString());
@@ -26,6 +26,7 @@ function EmlakAdd({refreshEmlakList }) {
           Authorization: `Bearer ${token}`
         }
        };
+    const emlakciId = localStorage.getItem('emlakciId');
 
     const addEmlak = async () => {
         // console.log("addEmlak ici", (await config).headers.Authorization);
@@ -38,7 +39,8 @@ function EmlakAdd({refreshEmlakList }) {
             fiyat: fiyat,
             ilanTarihi: ilanTarihi,
             ilanBitis: ilanBitis,
-            imageBase: img64
+            imageBase: img64,
+            emlakciId: parseInt(emlakciId,10)
         };
 
         try {
@@ -57,6 +59,7 @@ function EmlakAdd({refreshEmlakList }) {
         try {
             const data = await fetchDoviz(config);
             setDovizList(data);
+            setDoviz(data[0].id);
         } catch (error) {
             console.error("Error fetching Emlak data:", error);
         }
@@ -66,6 +69,7 @@ function EmlakAdd({refreshEmlakList }) {
         try {
             const data = await fetchEmlakType(config);
             setTypeList(data);
+            setType(data[0].id);
         } catch (error) {
             console.error("Error fetching Emlak data:", error);
         }
@@ -75,6 +79,7 @@ function EmlakAdd({refreshEmlakList }) {
         try {
             const data = await fetchEmlakDurumu(config);
             setDurumulist(data);
+            setDurumu(data[0].id);
         } catch (error) {
             console.error("Error fetching Emlak data:", error);
         }
@@ -93,71 +98,79 @@ function EmlakAdd({refreshEmlakList }) {
     }, []);
 
     return (
-        <div>
-            <label>
-                Title:
-                <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
-            </label>
-            <br />
-            <label>
-                Type:
-                <select value={type} onChange={e => setType(parseInt(e.target.value, 10))}>
-                    {typeList.map(item => (
-                        <option key={item.id} value={item.id}>
-                            {item.name}
-                        </option>
-                    ))}
-                </select>
-            </label>
-            <label>
-            Durumu:
-                <select value={durumu} onChange={e => setDurumu(parseInt(e.target.value, 10))}>
-                 {durumulist.map(item => (
-                    <option key={item.id} value={item.id}>
-                        {item.name}
-                    </option>
-                ))}
-                </select>
-             </label>
-
-            <label>
-                Doviz:
-                  <select value={doviz} onChange={e => setDoviz(parseInt(e.target.value, 10))}>
-                    {dovizList.map(item => (
-                        <option key={item.id} value={item.id}>
-                            {item.name}
-                        </option>   
-                    ))} 
-                </select>
-            </label>
-
-            <label>
-                Price:
-                <input type="number" value={fiyat} onChange={e => setFiyat(parseInt(e.target.value, 10))} />
-            </label>
-            <br />
-
-            <label>
-                Start Date and Time:
-                <input
-                    type="datetime-local"
-                    value={formatDateTimeForInput(ilanTarihi)}
-                    onChange={e => setIlanTarihi(e.target.value)}
-                />
-            </label>
-            <br />
-            <label>
-                End Date and Time:
-                <input
-                    type="datetime-local"
-                    value={formatDateTimeForInput(ilanBitis)}
-                    onChange={e => setIlanBitis(e.target.value)}
-                />
-            </label>
-
-            <br />
-            {/* Add more input fields as necessary... */}
-            <button onClick={addEmlak}>Add New Emlak</button>
+        <div className="container mt-5">
+            <form>
+                <div className="mb-3">
+                    <label htmlFor="titleInput" className="form-label">Title:</label>
+                    <input type="text" className="form-control" id="titleInput" value={title} onChange={e => setTitle(e.target.value)} />
+                </div>
+                
+                <div className="mb-3">
+                    <label htmlFor="typeSelect" className="form-label">Type:</label>
+                    <select className="form-select" id="typeSelect" value={type} onChange={e => setType(parseInt(e.target.value, 10))}>
+                        {typeList.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+    
+                <div className="mb-3">
+                    <label htmlFor="durumuSelect" className="form-label">Durumu:</label>
+                    <select className="form-select" id="durumuSelect" value={durumu} onChange={e => setDurumu(parseInt(e.target.value, 10))}>
+                        {durumulist.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+    
+                <div className="mb-3">
+                    <label htmlFor="dovizSelect" className="form-label">Doviz:</label>
+                    <select className="form-select" id="dovizSelect" value={doviz} onChange={e => setDoviz(parseInt(e.target.value, 10))}>
+                        {dovizList.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>   
+                        ))} 
+                    </select>
+                </div>
+    
+                <div className="mb-3">
+                    <label htmlFor="priceInput" className="form-label">Price:</label>
+                    <input type="number" className="form-control" id="priceInput" value={fiyat} onChange={e => setFiyat(parseInt(e.target.value, 10))} />
+                </div>
+    
+                <div className="mb-3">
+                    <label htmlFor="startDateInput" className="form-label">Start Date and Time:</label>
+                    <input
+                        type="datetime-local"
+                        className="form-control"
+                        id="startDateInput"
+                        value={formatDateTimeForInput(ilanTarihi)}
+                        onChange={e => setIlanTarihi(e.target.value)}
+                    />
+                </div>
+    
+                <div className="mb-3">
+                    <label htmlFor="endDateInput" className="form-label">End Date and Time:</label>
+                    <input
+                        type="datetime-local"
+                        className="form-control"
+                        id="endDateInput"
+                        value={formatDateTimeForInput(ilanBitis)}
+                        onChange={e => setIlanBitis(e.target.value)}
+                    />
+                </div>
+    
+                {/* Add more input fields as necessary... */}
+                
+                <div className="d-grid gap-2">
+                    <button type="button" className="btn btn-primary" onClick={addEmlak}>Add New Emlak</button>
+                </div>
+            </form>
         </div>
     )
 }

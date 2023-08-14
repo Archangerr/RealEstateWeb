@@ -45,11 +45,11 @@ namespace EmlakOtomaston.Controllers
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
 
-                var student = await _emlakContext.Emlakcilar.SingleAsync(s => s.Email == user.Email);
+                var emlakci = await _emlakContext.Emlakcilar.SingleAsync(s => s.Email == user.Email);
 
                 var authClaims = new List<Claim>
                 {
-                    new Claim("Id", student.Id.ToString()),
+                    new Claim("Id", emlakci.Id.ToString()),
                     new Claim(ClaimTypes.Name, user.UserName),
                     new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString()),
                 };
@@ -159,3 +159,4 @@ namespace EmlakOtomaston.Controllers
         }
     }
 }
+    

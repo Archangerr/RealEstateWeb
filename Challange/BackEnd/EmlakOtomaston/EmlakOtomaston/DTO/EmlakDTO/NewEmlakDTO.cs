@@ -24,7 +24,8 @@ namespace EmlakOtomaston.DTO.EmlakDTO
                 Fiyat = this.Fiyat,
                 IlanTarihi = this.IlanTarihi,
                 IlanBitis = this.IlanBitis,
-                ImageBase = this.ImageBase
+                ImageBase = this.ImageBase,
+                EmlakciId = this.EmlakciId
 
 
             };

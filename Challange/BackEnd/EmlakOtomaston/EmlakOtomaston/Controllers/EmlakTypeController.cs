@@ -35,6 +35,12 @@ namespace EmlakOtomaston.Controllers
         [HttpPost]
         public async Task<IActionResult> Post(EmlakType request)
         {
+            var item1 = await _emlakContext.EmlakType.SingleOrDefaultAsync(x => x.Name == request.Name);
+            if (request == null)
+                return BadRequest();
+            if(item1!= null )
+                return BadRequest("Bu isimde bir emlak tipi zaten var");
+                
             var item = _emlakContext.EmlakType.Add(request);
             await _emlakContext.SaveChangesAsync();
             var newEntity = _emlakContext.EmlakType.                

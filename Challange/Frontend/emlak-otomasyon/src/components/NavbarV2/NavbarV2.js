@@ -9,10 +9,13 @@ const NavbarV2 = () => {
         <Link to="/EmlakListingPagination">Go Emlak Pagination</Link>
         </li>
         <li>
-        <Link to="/EmlakListing">Go Emlak </Link>
+        <Link to="/EmlakAdd">Go EmlakAdd </Link>
         </li>
         <li>
         <Link to="/Search">Search </Link>
+        </li>
+        <li>
+        <Link to="/ParametersAdd">Parameters </Link>
         </li>
         
       </ul>

@@ -91,3 +91,36 @@ export const deleteEmlak = async (emlakId,config) => {
       alert('Failed to delete emlak. Please try again.');
   }
 };
+
+export async function addDoviz(dovizData, config) {
+  try {
+      const response = await axios.post('http://localhost:5218/Doviz', dovizData, config);
+      console.log('Doviz Added successfully:', response.data);
+      return response.data;
+  } catch (error) {
+      console.error('Error while adding Emlak:', error);
+      throw error;
+  }
+}
+
+export async function addType(typeData, config) {
+  try {
+      const response = await axios.post('http://localhost:5218/EmlakType', typeData, config);
+      console.log('Type Added successfully:', response.data);
+      return response.data;
+  } catch (error) {
+      console.error('Error while adding Emlak:', error);
+      throw error;
+  }
+}
+
+export async function addDurumu(data, config) {
+  try {
+      const response = await axios.post('http://localhost:5218/EmlakDurumu', data, config);
+      console.log('Type Added successfully:', response.data);
+      return response.data;
+  } catch (error) {
+      console.error('Error while adding Emlak:', error);
+      throw error;
+  }
+}
