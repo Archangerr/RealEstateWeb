@@ -14,6 +14,7 @@ namespace EmlakOtomaston.DTO.EmlakDTO
         public DateTime IlanTarihi { get; set; }
         public DateTime IlanBitis { get; set; }
         public string ImageBase { get; set; }
+        public int EmlakciId { get; set; }
 
 
         public EditEmlakDTO()
@@ -31,7 +32,8 @@ namespace EmlakOtomaston.DTO.EmlakDTO
                 Fiyat = this.Fiyat,
                 IlanTarihi = this.IlanTarihi,
                 IlanBitis = this.IlanBitis,
-                ImageBase = this.ImageBase
+                ImageBase = this.ImageBase,
+                EmlakciId = this.EmlakciId
 
             };
 

@@ -40,6 +40,7 @@ function EditEmlak() {
             setTitle(data.title);
             setType(data.typeId); 
             setDurumu(data.durumuId);
+            
             setDoviz(data.dovizId);
             setFiyat(data.fiyat);
             console.log("data fiyat", data.fiyat);

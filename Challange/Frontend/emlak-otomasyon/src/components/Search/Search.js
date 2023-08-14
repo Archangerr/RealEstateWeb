@@ -19,6 +19,7 @@ function Search() {
 
     const handleSearch = async () => 
     {
+        console.log(config);
         try {
             const data = await fetchSearch(searchModel,config);
             setEmlakList(data);

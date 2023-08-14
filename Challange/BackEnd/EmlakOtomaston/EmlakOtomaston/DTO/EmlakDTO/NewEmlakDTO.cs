@@ -26,6 +26,7 @@ namespace EmlakOtomaston.DTO.EmlakDTO
                 IlanBitis = this.IlanBitis,
                 ImageBase = this.ImageBase
 
+
             };
 
         }

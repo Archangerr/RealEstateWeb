@@ -30,7 +30,8 @@ namespace EmlakOtomaston.Controllers
             var result = await _emlakContext.Emlaklar.
                 Include(emlak => emlak.Doviz).
                 Include(emlak => emlak.Durumu).
-                Include(emlak => emlak.Type).
+                Include(emlak => emlak.Type)
+               .Include(emlak => emlak.EmlakciId).
                 ToListAsync();
 
             if (result == null)
@@ -58,6 +59,7 @@ namespace EmlakOtomaston.Controllers
                         .Include(emlak => emlak.Doviz)
                         .Include(emlak => emlak.Durumu)
                         .Include(emlak => emlak.Type)
+                        .Include(emlak => emlak.EmlakciId)
                         .OrderBy(emlak => emlak.Id) 
                         .Skip(pageIndex * pageSize)
                         .Take(pageSize)
@@ -93,7 +95,8 @@ namespace EmlakOtomaston.Controllers
             IQueryable<Emlak> query = _emlakContext.Emlaklar
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
-                .Include(emlak => emlak.Type);
+                .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId);
 
             if (!string.IsNullOrWhiteSpace(searchModel.Title))
             {
@@ -143,6 +146,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId)
                 .Where(x => x.Id == id  && x.isAvailable).ToListAsync();
 
             if (result == null)
@@ -164,6 +168,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId)
                 .Where(x => x.Title.Contains(title) && x.isAvailable).ToListAsync();
 
             if (result == null)
@@ -185,6 +190,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId)
                 .Where(x => x.Type == type && x.isAvailable).ToListAsync();
 
             if (result == null)
@@ -206,6 +212,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId)
                 .Where(x => x.Durumu == durumu && x.isAvailable).ToListAsync();
 
             if (result == null)
@@ -228,6 +235,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId)
                 .Where(r => r.IlanTarihi >= BaslangicTarihi && r.IlanTarihi <= BitisTarihi && r.isAvailable).ToListAsync();
 
             var emlakDetailsList = new List<EmlakDetailsDTO>();
@@ -245,6 +253,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId)
                 .Single(x => x.Id == item.Entity.Id && x.isAvailable);
 
             return Ok(new EmlakDetailsDTO(newEntity));
@@ -258,6 +267,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId)
                 .SingleOrDefaultAsync(x => x.Id == request.Id);
             if (item != null)
             {
@@ -283,6 +293,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Doviz)
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.EmlakciId)
                 .SingleOrDefaultAsync(x => x.Id == id);
             if (item != null)
             {

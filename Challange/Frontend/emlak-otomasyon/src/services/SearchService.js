@@ -3,7 +3,7 @@ import React, { useEffect, useState, useContext } from 'react';
 
 export async function fetchSearch(searchModel,config) {
     try {
-        const response = await axios.get('http://localhost:5218/Emlak/Filtered', {
+        const response = await axios.get('http://localhost:5218/Emlak/Filtered',config, {
             params: searchModel
         });
       console.log(response.data);

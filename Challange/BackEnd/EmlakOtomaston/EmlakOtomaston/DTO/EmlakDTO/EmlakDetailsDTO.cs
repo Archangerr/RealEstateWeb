@@ -27,6 +27,7 @@ namespace EmlakOtomaston.DTO.EmlakDTO
             IlanTarihi = emlak.IlanTarihi;
             IlanBitis = emlak.IlanBitis;
             ImageBase = emlak.ImageBase;
+            EmlakciId = emlak.EmlakciId;
 
         }
     }

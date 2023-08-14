@@ -16,5 +16,8 @@ namespace EmlakOtomaston.Entity
         public DateTime IlanBitis { get; set; }
         public string ImageBase { get; set; }
         public bool isAvailable { get; set; }
+
+        public int EmlakciId { get; set; }
+        public virtual Emlakci Emlakci { get; set; }
     }
 }

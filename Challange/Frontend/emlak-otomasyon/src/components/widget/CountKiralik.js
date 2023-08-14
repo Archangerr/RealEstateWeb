@@ -20,7 +20,7 @@ function KiralikCount() {
                 console.log("widget ici",response.data);
 
                 if (response.status === 200) {
-                    setCount(response.data);
+                    setCount(response.data.count);
                 } else {
                     setError('Failed to fetch data.');
                 }
