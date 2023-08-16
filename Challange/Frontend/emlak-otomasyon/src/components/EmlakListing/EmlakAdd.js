@@ -18,9 +18,8 @@ function EmlakAdd() {
     const [fiyat, setFiyat] = useState(1);
     const [ilanTarihi, setIlanTarihi] = useState(new Date().toISOString());
     const [ilanBitis, setIlanBitis] = useState(new Date().toISOString());
-    const [img64, setImg4] = useState('');
-    const [image, setImage] = useState(null);
-    const [imagePreview, setImagePreview] = useState(null);
+    const [images, setImages] = useState([]);
+    const [imagePreviews, setImagePreviews] = useState([]); 
   
     
         const token = localStorage.getItem('userToken');
@@ -42,13 +41,15 @@ function EmlakAdd() {
             fiyat: fiyat,
             ilanTarihi: ilanTarihi,
             ilanBitis: ilanBitis,
-            imageBase: img64,
+            imageBases: imagePreviews,
             emlakciId: parseInt(emlakciId,10)
         };
 
         try {
 
             await addNewEmlak(newEmlakData, config);
+            setImages([]);
+            setImagePreviews([]);
         } catch (error) {
             console.error("Failed to add new Emlak:", error);
         }
@@ -98,16 +99,38 @@ function EmlakAdd() {
         return formattedDate;
     };
     const handleImageChange = (e) => {
-        const file = e.target.files[0];
-        const reader = new FileReader();
-        
-        reader.readAsDataURL(file);
-        reader.onloadend = () => {
-          setImage(file);
-          setImagePreview(reader.result);
-        }; 
-    }
+        const chosenFiles = Array.prototype.slice.call(e.target.files)
+        handleUploadFiles(chosenFiles);
+        console.log("previews", imagePreviews);
+    };     
+    const [fileLimit, setFileLimit] =useState(false)
 
+    const handleUploadFiles = files => {
+        const uploaded = [...images];
+        const previews = [...imagePreviews];
+        let limitExceeded = false;
+        files.some((file) => {
+            if(uploaded.findIndex((f) => f.name ===file.name)=== -1){
+                uploaded.push(file);
+                const reader = new FileReader();
+
+                reader.onloadend = () => {
+                    previews.push(reader.result);
+                    setImagePreviews(previews);
+                }
+                reader.readAsDataURL(file);
+            }
+                if(uploaded.length === 5) setFileLimit(true);
+                if(uploaded.length > 5) {
+                    alert('You can upload only 5 files');
+                    setFileLimit(false);
+                    limitExceeded = true;
+                    return true;
+                }
+        })
+        if(!limitExceeded) setImages(uploaded);
+    }
+    
     useEffect(() => {
         getDoviz(config).then(data =>{
             setDovizList(data);
@@ -122,7 +145,10 @@ function EmlakAdd() {
         setDurumu(data[0].id);
     });
     }, []);
-
+    useEffect(() => {
+        console.log("images", images);
+        console.log("previews", imagePreviews);
+      }, [images, imagePreviews]);
     return (
         <div className="container mt-5">
             <form>
@@ -191,15 +217,34 @@ function EmlakAdd() {
                     />
                 </div>
     
-                {/* Add more input fields as necessary... */}
+                <div>
+                    <input id='fileupload'
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handleImageChange} 
+                        disabled={fileLimit}
+                    />
+                    <label htmlFor='fileUpload'>
+                        <a className={`btn btn-primary ${!fileLimit ? '' : 'disabled'}`}> Upload Files </a>
+                    </label>
+                    <div className='uploaded-files-list'>
+                        {images.map(file =>(
+                            <div key={file.name} className='file-item'>
+                                <span className='file-name'>{file.name}</span>
+                            </div>
+                        ))}
+                    </div>
+                    <div>
+                         {Array.isArray(imagePreviews) && imagePreviews.map((preview, index) => (
+                          <img key={index} src={preview} alt="preview" className="img-fluid img-thumbnail w-25" />
+                          ))}
+                    </div>
+                </div>
                 
                 <div className="d-grid gap-2">
                     <button type="button" className="btn btn-primary" onClick={addEmlak}>Add New Emlak</button>
                 </div>
-                <div>
-                    <input type="file" accept="image/*" onChange={handleImageChange} />
-                    {imagePreview && <img src={imagePreview} alt="preview" />}
-                </div>
+                
             </form>
         </div>
     )

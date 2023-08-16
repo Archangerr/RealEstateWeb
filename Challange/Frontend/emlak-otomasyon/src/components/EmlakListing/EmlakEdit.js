@@ -27,7 +27,7 @@ function EditEmlak() {
     const [fiyat, setFiyat] = useState(1);
     const [ilanTarihi, setIlanTarihi] = useState(new Date());
     const [ilanBitis, setIlanBitis] = useState(new Date());
-    const [img64, setImg4] = useState('');
+    const [img64, setImg4] = useState([]);
 
     
 
@@ -69,7 +69,7 @@ function EditEmlak() {
             fiyat: fiyat,
             ilanTarihi: ilanTarihi,
             ilanBitis: ilanBitis,
-            imageBase: img64
+            imageBases: []
         };
 
         try {

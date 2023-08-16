@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { addDurumu, addDoviz, addType, fetchDoviz, fetchEmlakDurumu, fetchEmlakType } from '../../services/EmlakListingService';
-import { editType, deleteType, editDoviz, deleteDoviz, editDurumu, deleteDurumu } from '../../services/ParameterService';
+import { addDurumu, addDoviz, addType} from '../../services/EmlakListingService';
+import { editType, deleteType, editDoviz, deleteDoviz, editDurumu, deleteDurumu , fetchEmlakDurumu, fetchEmlakType, fetchDoviz } from '../../services/ParameterService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function ParametersAdd() {
