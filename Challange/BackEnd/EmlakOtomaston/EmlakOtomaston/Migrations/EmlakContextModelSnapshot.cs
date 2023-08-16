@@ -65,10 +65,6 @@ namespace EmlakOtomaston.Migrations
                     b.Property<DateTime>("IlanTarihi")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("ImageBase")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -147,6 +143,28 @@ namespace EmlakOtomaston.Migrations
                     b.ToTable("Emlakcilar");
                 });
 
+            modelBuilder.Entity("EmlakOtomaston.Entity.Image", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("EmlakId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ImageBase")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EmlakId");
+
+                    b.ToTable("Image");
+                });
+
             modelBuilder.Entity("EmlakOtomaston.Entity.Emlak", b =>
                 {
                     b.HasOne("EmlakOtomaston.Entity.Doviz", "Doviz")
@@ -180,6 +198,22 @@ namespace EmlakOtomaston.Migrations
                     b.Navigation("Emlakci");
 
                     b.Navigation("Type");
+                });
+
+            modelBuilder.Entity("EmlakOtomaston.Entity.Image", b =>
+                {
+                    b.HasOne("EmlakOtomaston.Entity.Emlak", "Emlak")
+                        .WithMany("Images")
+                        .HasForeignKey("EmlakId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Emlak");
+                });
+
+            modelBuilder.Entity("EmlakOtomaston.Entity.Emlak", b =>
+                {
+                    b.Navigation("Images");
                 });
 
             modelBuilder.Entity("EmlakOtomaston.Entity.Emlakci", b =>

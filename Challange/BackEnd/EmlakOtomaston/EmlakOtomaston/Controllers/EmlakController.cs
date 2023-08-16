@@ -278,7 +278,18 @@ namespace EmlakOtomaston.Controllers
                 item.Fiyat = request.Fiyat;
                 item.IlanTarihi = request.IlanTarihi;
                 item.IlanBitis = request.IlanBitis;
-                item.ImageBase = request.ImageBase;
+                item.Images = new List<Image>();
+                if(request.ImageBases != null) {                    
+                    foreach (var imageBase in request.ImageBases)
+                    {
+                        item.Images.Add(new Image
+                        {
+                            ImageBase = imageBase,
+                            // Set EmlakId if needed
+                        });
+                    }
+                }
+                
                 var result = await _emlakContext.SaveChangesAsync();
                 return Ok(new EmlakDetailsDTO(item));
             }

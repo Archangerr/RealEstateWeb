@@ -18,7 +18,7 @@ namespace EmlakOtomaston.DTO.EmlakDTO
         public string Type { get; set; }
         public EmlakDetailsDTO(Emlak emlak)
         {
-            Id= emlak.Id;
+            Id= emlak.Id; 
             Title = emlak.Title;
             Doviz = emlak.Doviz.Name;
             Durumu = emlak.Durumu.Name;
