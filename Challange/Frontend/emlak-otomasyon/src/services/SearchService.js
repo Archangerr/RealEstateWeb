@@ -1,11 +1,10 @@
 import axios from 'axios';
 import React, { useEffect, useState, useContext } from 'react';
 
-export async function fetchSearch(searchModel,config) {
+export async function fetchSearch(data,config) {
+  console.log("searchModel inside fetchSearch : ",data);
     try {
-        const response = await axios.get('http://localhost:5218/Emlak/Filtered',config, {
-            params: searchModel
-        });
+      const response = await axios.get(`http://localhost:5218/Emlak/Filtered?${data}`,config);
       console.log(response.data);
       return response.data;
     } catch (error) {

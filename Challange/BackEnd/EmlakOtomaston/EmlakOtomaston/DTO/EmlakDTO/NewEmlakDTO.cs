@@ -1,4 +1,5 @@
 ﻿using EmlakOtomaston.Entity;
+using EmlakOtomaston.Migrations;
 
 
 namespace EmlakOtomaston.DTO.EmlakDTO
@@ -13,7 +14,8 @@ namespace EmlakOtomaston.DTO.EmlakDTO
        // public new Emlak ToEmlak()
         public  Emlak ToEmlak()
         {
-            return new Emlak()
+            
+            var emlak= new Emlak()
             {
                 Id = 0,
                 isAvailable = true,
@@ -24,11 +26,21 @@ namespace EmlakOtomaston.DTO.EmlakDTO
                 Fiyat = this.Fiyat,
                 IlanTarihi = this.IlanTarihi,
                 IlanBitis = this.IlanBitis,
-                ImageBase = this.ImageBase,
-                EmlakciId = this.EmlakciId
-
-
+                EmlakciId = this.EmlakciId,
             };
+
+            emlak.Images = new List<Image>();
+
+            foreach (var imageBase in this.ImageBases)
+            {
+                emlak.Images.Add(new Image
+                {
+                    ImageBase = imageBase,
+                    // Set EmlakId if needed
+                });
+            }
+
+            return emlak;
 
         }
 

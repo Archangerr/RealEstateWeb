@@ -14,7 +14,7 @@ namespace EmlakOtomaston.Entity
         
         public DateTime IlanTarihi { get; set; }
         public DateTime IlanBitis { get; set; }
-        public string ImageBase { get; set; }
+        public ICollection<Image> Images { get; set; }
         public bool isAvailable { get; set; }
 
         public int EmlakciId { get; set; }

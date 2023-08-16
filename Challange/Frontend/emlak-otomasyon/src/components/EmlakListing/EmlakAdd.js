@@ -1,9 +1,10 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { addNewEmlak, fetchDoviz, fetchEmlakDurumu, fetchEmlakType } from '../../services/EmlakListingService';
+import { getDurumu,getDoviz,getType } from '../../services/ParameterService';
 import getConfig  from '../../components/Config/apiConfig';
 import setRefreshKey from './EmlakListing';
 
-function EmlakAdd({refreshEmlakList }) {
+function EmlakAdd() {
 
     // var config = getConfig();
 
@@ -18,7 +19,9 @@ function EmlakAdd({refreshEmlakList }) {
     const [ilanTarihi, setIlanTarihi] = useState(new Date().toISOString());
     const [ilanBitis, setIlanBitis] = useState(new Date().toISOString());
     const [img64, setImg4] = useState('');
-
+    const [image, setImage] = useState(null);
+    const [imagePreview, setImagePreview] = useState(null);
+  
     
         const token = localStorage.getItem('userToken');
         const config = {
@@ -46,7 +49,6 @@ function EmlakAdd({refreshEmlakList }) {
         try {
 
             await addNewEmlak(newEmlakData, config);
-            refreshEmlakList();
         } catch (error) {
             console.error("Failed to add new Emlak:", error);
         }
@@ -54,47 +56,71 @@ function EmlakAdd({refreshEmlakList }) {
 
     }
 
-    const getDoviz = async () => 
-    {
-        try {
-            const data = await fetchDoviz(config);
-            setDovizList(data);
-            setDoviz(data[0].id);
-        } catch (error) {
-            console.error("Error fetching Emlak data:", error);
-        }
-    }
-    const getType = async () => 
-    {
-        try {
-            const data = await fetchEmlakType(config);
-            setTypeList(data);
-            setType(data[0].id);
-        } catch (error) {
-            console.error("Error fetching Emlak data:", error);
-        }
-    }
-    const getDurumu = async () => 
-    {
-        try {
-            const data = await fetchEmlakDurumu(config);
-            setDurumulist(data);
-            setDurumu(data[0].id);
-        } catch (error) {
-            console.error("Error fetching Emlak data:", error);
-        }
-    }
-
+    // const getDoviz = async () => 
+    // {
+    //     try {
+    //         const data = await fetchDoviz(config);
+    //         setDovizList(data);
+    //         setDoviz(data[0].id);
+    //     } catch (error) {
+    //         console.error("Error fetching Emlak data:", error);
+    //     }
+    // }
+    // const getType = async () => 
+    // {
+    //     try {
+    //         const data = await fetchEmlakType(config);
+    //         setTypeList(data);
+    //         setType(data[0].id);
+    //     } catch (error) {
+    //         console.error("Error fetching Emlak data:", error);
+    //     }
+    // }
+    // const getDurumu = async () => 
+    // {
+    //     try {
+    //         const data = await fetchEmlakDurumu(config);
+    //         setDurumulist(data);
+    //         setDurumu(data[0].id);
+    //     } catch (error) {
+    //         console.error("Error fetching Emlak data:", error);
+    //     }
+    // }
+    // getDurumu(config).then(data => {
+    //     setDurumulist(data);
+    //     setDurumu(data[0].id);
+    // });
+    console.log("durumulist", durumulist);
+    console.log("durumu", durumu);
     const formatDateTimeForInput = (dateStr) => {
         let date = new Date(dateStr);
         let formattedDate = date.toISOString().slice(0, 16); // "yyyy-MM-ddThh:mm"
         return formattedDate;
     };
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        const reader = new FileReader();
+        
+        reader.readAsDataURL(file);
+        reader.onloadend = () => {
+          setImage(file);
+          setImagePreview(reader.result);
+        }; 
+    }
 
     useEffect(() => {
-        getDoviz(); // Call fetchData when component mounts
-        getType();
-        getDurumu();
+        getDoviz(config).then(data =>{
+            setDovizList(data);
+            setDoviz(data[0].id);
+        }) 
+        getType(config).then(data => {
+            setTypeList(data);
+            setType(data[0].id);
+        })
+     getDurumu(config).then(data => {
+        setDurumulist(data);
+        setDurumu(data[0].id);
+    });
     }, []);
 
     return (
@@ -169,6 +195,10 @@ function EmlakAdd({refreshEmlakList }) {
                 
                 <div className="d-grid gap-2">
                     <button type="button" className="btn btn-primary" onClick={addEmlak}>Add New Emlak</button>
+                </div>
+                <div>
+                    <input type="file" accept="image/*" onChange={handleImageChange} />
+                    {imagePreview && <img src={imagePreview} alt="preview" />}
                 </div>
             </form>
         </div>

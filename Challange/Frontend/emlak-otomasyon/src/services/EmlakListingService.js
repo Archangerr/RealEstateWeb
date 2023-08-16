@@ -17,36 +17,36 @@ export async function fetchEmlak(config) {
     }
 }
 
-export async function fetchDoviz(config) {
-  try {
-    const response = await axios.get('http://localhost:5218/Doviz/list', config);
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error while fetching Doviz in:', error);
-    throw error;
-  }
-}
-export async function fetchEmlakDurumu(config) {
-  try {
-    const response = await axios.get('http://localhost:5218/EmlakDurumu/list', config);
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error while fetching EmlakDurumu in:', error);
-    throw error;
-  }
-}
-export async function fetchEmlakType(config) {
-  try {
-    const response = await axios.get('http://localhost:5218/EmlakType/list', config);
-    console.log(response.data);
-    return response.data;
-  } catch (error) {
-    console.error('Error while fetching EmlakType in:', error);
-    throw error;
-  }
-}
+// export async function fetchDoviz(config) {
+//   try {
+//     const response = await axios.get('http://localhost:5218/Doviz/list', config);
+//     console.log(response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error while fetching Doviz in:', error);
+//     throw error;
+//   }
+// }
+// export async function fetchEmlakDurumu(config) {
+//   try {
+//     const response = await axios.get('http://localhost:5218/EmlakDurumu/list', config);
+//     console.log(response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error while fetching EmlakDurumu in:', error);
+//     throw error;
+//   }
+// }
+// export async function fetchEmlakType(config) {
+//   try {
+//     const response = await axios.get('http://localhost:5218/EmlakType/list', config);
+//     console.log(response.data);
+//     return response.data;
+//   } catch (error) {
+//     console.error('Error while fetching EmlakType in:', error);
+//     throw error;
+//   }
+// }
 
 
 export async function addNewEmlak(emlakData, config) {

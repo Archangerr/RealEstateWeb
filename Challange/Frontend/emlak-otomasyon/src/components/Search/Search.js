@@ -1,6 +1,7 @@
 
 import { fetchSearch, searchService } from '../../services/SearchService';
 import React, { useEffect, useState, useContext } from 'react';
+import { getDurumu,getDoviz,getType } from '../../services/ParameterService';
 
 function Search() {
     const token = localStorage.getItem('userToken'); // Access the token
@@ -10,33 +11,101 @@ function Search() {
         }
     };
 
-    const [searchModel, setSearchModel] = useState({});
+    // const [searchModel, setSearchModel] = useState({    });
+    const [title, setTitle] = useState(null);
+    const [minPrice, setMinPrice] = useState(null);
+    const [maxPrice, setMaxPrice] = useState(null);
     const [emlakList, setEmlakList] = useState([]);
+    const [typeList, setTypeList] = useState([]);
+    const [type, setType] = useState();
+    const [durumulist, setDurumulist] = useState([]);
+    const [durumu, setDurumu] = useState();
+    const [dovizList, setDovizList] = useState([]);
+    const [doviz, setDoviz] = useState();
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setSearchModel(prevState => ({ ...prevState, [name]: value }));
-    };
+    // const handleInputChange = (e) => {
+    //     const { name, value } = e.target;
+    //     setSearchModel(prevState => ({ ...prevState, [name]: value }));
+    // };
 
     const handleSearch = async () => 
     {
-        console.log(config);
+        const searchModel = {
+            Title: title,
+            MinPrice: minPrice,
+            MaxPrice: maxPrice,
+            DateTime: null,
+            TypeId: type,
+            DurumuId: durumu,
+            DovizId: doviz
+        };
+        const filteredSearchModel = Object.fromEntries(
+            Object.entries(searchModel)
+            .filter(([key, value]) => value != null && value !== '')
+        );
+        console.log(filteredSearchModel)
+        const params = new URLSearchParams(filteredSearchModel);
+        const queryString = params.toString();
+        console.log(queryString);
         try {
-            const data = await fetchSearch(searchModel,config);
+            const data = await fetchSearch(queryString,config);
             setEmlakList(data);
         } catch (error) {
             console.error("Error fetching Emlak data:", error);
         }
     }
 
+    useEffect(() => {
+        getDoviz(config).then(data =>{
+            setDovizList(data);
+          //  setDoviz(data[0].id);
+        }) 
+        getType(config).then(data => {
+            setTypeList(data);
+          //  setType(data[0].id);
+        })
+     getDurumu(config).then(data => {
+        setDurumulist(data);
+        //setDurumu(data[0].id);
+    });
+    }, []);
+
     return (
         <div>
-            <input name="Title" onChange={handleInputChange} placeholder="Search by Title" />
-            <input type="number" name="MinPrice" onChange={handleInputChange} placeholder="Minimum Price" />
-            <input type="number" name="MaxPrice" onChange={handleInputChange} placeholder="Maximum Price" />
-            <input type="number" name="TypeId" onChange={handleInputChange} placeholder="Type ID" />
-            <input type="number" name="DurumuId" onChange={handleInputChange} placeholder="Durumu ID" />
-            <input type="number" name="DovizId" onChange={handleInputChange} placeholder="Doviz ID" />
+            <input type="text" className="form-control" id="titleInput" value={title} onChange={e => setTitle(e.target.value)} />
+            <input type="number" value={minPrice} onChange={e => setMinPrice(e.target.value)} placeholder="Minimum Price" />
+            <input type="number" value={maxPrice} onChange={e => setMaxPrice(e.target.value)} placeholder="Maximum Price" />
+            <div className="mb-3">
+                <label htmlFor="typeSelect" className="form-label">Type:</label>
+                    <select className="form-select" id="typeSelect" value={type} onChange={e => setType(parseInt(e.target.value, 10))}>
+                        {typeList.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+            </div>
+            <div className="mb-3">
+                <label htmlFor="durumuSelect" className="form-label">Durumu:</label>
+                    <select className="form-select" id="durumuSelect" value={durumu} onChange={e => setDurumu(parseInt(e.target.value, 10))}>
+                        {durumulist.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>
+                        ))}
+                    </select>
+            </div>
+    
+            <div className="mb-3">
+                <label htmlFor="dovizSelect" className="form-label">Doviz:</label>
+                    <select className="form-select" id="dovizSelect" value={doviz} onChange={e => setDoviz(parseInt(e.target.value, 10))}>
+                        {dovizList.map(item => (
+                            <option key={item.id} value={item.id}>
+                                {item.name}
+                            </option>   
+                        ))} 
+                    </select>
+            </div>
             <button onClick={handleSearch}>Search</button>
             <h2>Emlak Listings</h2>
             {/* <button onClick={fetchData}>Fetch Listings</button> */}

@@ -13,8 +13,9 @@ namespace EmlakOtomaston.DTO.EmlakDTO
         public int Fiyat { get; set; }
         public DateTime IlanTarihi { get; set; }
         public DateTime IlanBitis { get; set; }
-        public string ImageBase { get; set; }
         public int EmlakciId { get; set; }
+        public List<string> ImageBases { get; set; }
+
 
 
         public EditEmlakDTO()
@@ -22,7 +23,7 @@ namespace EmlakOtomaston.DTO.EmlakDTO
         }
         public Emlak ToEmlak()
         {
-            return new Emlak()
+            var emlak = new Emlak()
             {
                 Id = 0,
                 Title = this.Title,
@@ -32,11 +33,21 @@ namespace EmlakOtomaston.DTO.EmlakDTO
                 Fiyat = this.Fiyat,
                 IlanTarihi = this.IlanTarihi,
                 IlanBitis = this.IlanBitis,
-                ImageBase = this.ImageBase,
                 EmlakciId = this.EmlakciId
 
             };
+            emlak.Images = new List<Image>();
 
+            foreach (var imageBase in this.ImageBases)
+            {
+                emlak.Images.Add(new Image
+                {
+                    ImageBase = imageBase,
+                    // Set EmlakId if needed
+                });
+            }
+
+            return emlak;
         }
 
     }

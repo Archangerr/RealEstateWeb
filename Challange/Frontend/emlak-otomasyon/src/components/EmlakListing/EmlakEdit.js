@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { addNewEmlak, fetchById, fetchDoviz, fetchEmlakDurumu, fetchEmlakType,editEmlak } from '../../services/EmlakListingService';
+import { addNewEmlak, fetchById,editEmlak } from '../../services/EmlakListingService';
+import { fetchDoviz, fetchEmlakDurumu, fetchEmlakType } from '../../services/ParameterService';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 

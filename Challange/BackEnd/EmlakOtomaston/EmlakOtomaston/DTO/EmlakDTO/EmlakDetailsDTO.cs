@@ -26,9 +26,13 @@ namespace EmlakOtomaston.DTO.EmlakDTO
             Fiyat = emlak.Fiyat;
             IlanTarihi = emlak.IlanTarihi;
             IlanBitis = emlak.IlanBitis;
-            ImageBase = emlak.ImageBase;
             EmlakciId = emlak.EmlakciId;
+            ImageBases = new List<string>();
 
+            foreach (var image in emlak.Images)
+            {
+                ImageBases.Add(image.ImageBase);
+            }
         }
     }
 }
