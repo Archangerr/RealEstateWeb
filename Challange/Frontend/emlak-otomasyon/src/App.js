@@ -9,6 +9,8 @@ import EmlakAdd from './components/EmlakListing/EmlakAdd';
 import Search from './components/Search/Search';  
 import React, { useState } from 'react';
 import Navbar from './components/NavbarV2/NavbarV2';
+import EmlakDetails from './components/Details/EmlakDetails';
+import MapPage from './components/Map/MapPage';
 import CountKiralik from './components/widget/CountKiralik';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -38,6 +40,8 @@ function App() {
           <Route path="/EmlakEdit/:emlakId" element={<EmlakEdit />} />
           <Route path="/ParametersAdd" element={<ParametersAdd />} />
           <Route path="/EmlakAdd" element={<EmlakAdd />} />
+          <Route path="/EmlakDetails/:emlakId" element={<EmlakDetails/>} />
+          <Route path="/MapPage" element={<MapPage/>} />
          </Routes>
        </BrowserRouter>
      

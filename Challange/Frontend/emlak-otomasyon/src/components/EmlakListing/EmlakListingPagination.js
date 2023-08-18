@@ -13,16 +13,16 @@ function EmlakListingPagination() {
 
     const token = localStorage.getItem('userToken');
     const config1 = {
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-   };
+        headers: {
+            Authorization: `Bearer ${token}`
+        }
+    };
 
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const response = await axios.get(`http://localhost:5218/Emlak/Pagination?pageIndex=${pageIndex}&pageSize=${pageSize}`,config1);
+                const response = await axios.get(`http://localhost:5218/Emlak/Pagination?pageIndex=${pageIndex}&pageSize=${pageSize}`, config1);
                 setData(response.data.items);
                 setTotalPages(response.data.totalPages);
                 console.log(response.data.totalPages);
@@ -36,33 +36,35 @@ function EmlakListingPagination() {
 
     return (
         <div>
-            
+
             <CountKiralik />
             {data.map(emlak => (
-            <div key={emlak.id}>
-                <h3>{emlak.title}</h3>
-                <p>Type: {emlak.type}</p>
-                <p>Durumu: {emlak.durumu}</p>
-                <p>Price: {emlak.fiyat} {emlak.doviz}</p>
-                <p>Listing Date: {emlak.ilanTarihi}</p>
-                <p>Expiry Date: {emlak.ilanBitis}</p>
-                <Link to={`/EmlakEdit/${emlak.id}`}>
-                     Edit
-                 </Link>
+                <div key={emlak.id}>
+                    <Link to={`/EmlakDetails/${emlak.id}`}>
+                        <h3>{emlak.title}</h3>
+                    </Link>
+                    <p>Type: {emlak.type}</p>
+                    <p>Durumu: {emlak.durumu}</p>
+                    <p>Price: {emlak.fiyat} {emlak.doviz}</p>
+                    <p>Listing Date: {emlak.ilanTarihi}</p>
+                    <p>Expiry Date: {emlak.ilanBitis}</p>
+                    <Link to={`/EmlakEdit/${emlak.id}`}>
+                        Edit
+                    </Link>
 
-                 <button onClick={() => deleteEmlak(emlak.id,config1)}>
+                    <button onClick={() => deleteEmlak(emlak.id, config1)}>
                         Delete
                     </button>
-                {/* Optionally, you can display the image if it's a URL */}
-                {/* <img src={emlak.imageBase} alt={emlak.title} /> */}
-            </div>
+                    {/* Optionally, you can display the image if it's a URL */}
+                    {/* <img src={emlak.imageBase} alt={emlak.title} /> */}
+                </div>
             ))}
 
             <div>
                 <button onClick={() => setPageIndex(prev => Math.max(prev - 1, 0))} disabled={pageIndex <= 0}>
                     Previous
                 </button>
-                <button onClick={() => {  if (pageIndex < totalPages - 1) {setPageIndex(prev => prev + 1); }   }} disabled={pageIndex >= totalPages - 1}>
+                <button onClick={() => { if (pageIndex < totalPages - 1) { setPageIndex(prev => prev + 1); } }} disabled={pageIndex >= totalPages - 1}>
                     Next
                 </button>
             </div>
