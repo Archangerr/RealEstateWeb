@@ -279,6 +279,8 @@ namespace EmlakOtomaston.Controllers
                 item.IlanTarihi = request.IlanTarihi;
                 item.IlanBitis = request.IlanBitis;
                 item.Images = new List<Image>();
+                item.Latitude = request.Latitude;
+                item.Longitude = request.Longitude;
                 if(request.ImageBases != null) {                    
                     foreach (var imageBase in request.ImageBases)
                     {

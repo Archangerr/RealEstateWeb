@@ -27,11 +27,16 @@ namespace EmlakOtomaston.DTO.EmlakDTO
             IlanTarihi = emlak.IlanTarihi;
             IlanBitis = emlak.IlanBitis;
             EmlakciId = emlak.EmlakciId;
+            Longitude = emlak.Longitude;
+            Latitude = emlak.Latitude;
             ImageBases = new List<string>();
 
-            foreach (var image in emlak.Images)
+            if (emlak.Images != null)
             {
-                ImageBases.Add(image.ImageBase);
+                foreach (var image in emlak.Images)
+                {
+                    ImageBases.Add(image.ImageBase);
+                }
             }
         }
     }

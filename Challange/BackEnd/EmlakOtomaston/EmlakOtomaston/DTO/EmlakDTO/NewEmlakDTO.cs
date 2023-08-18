@@ -27,6 +27,8 @@ namespace EmlakOtomaston.DTO.EmlakDTO
                 IlanTarihi = this.IlanTarihi,
                 IlanBitis = this.IlanBitis,
                 EmlakciId = this.EmlakciId,
+                Latitude = this.Latitude,
+                Longitude = this.Longitude
             };
 
             emlak.Images = new List<Image>();
