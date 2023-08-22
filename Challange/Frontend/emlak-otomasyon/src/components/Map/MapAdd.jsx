@@ -27,6 +27,8 @@ function MyComponent({ latitude, longitude, setLatitude, setLongitude }) {
             const bounds = new window.google.maps.LatLngBounds();
             bounds.extend(center);
             map.fitBounds(bounds);
+            map.setCenter(center);
+            map.setZoom(15);
             setMap(map)
 
             map.addListener('click', (e) => {

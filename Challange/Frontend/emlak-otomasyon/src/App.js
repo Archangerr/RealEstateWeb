@@ -11,6 +11,8 @@ import React, { useState } from 'react';
 import Navbar from './components/NavbarV2/NavbarV2';
 import EmlakDetails from './components/Details/EmlakDetails';
 import MapPage from './components/Map/MapPage';
+import Map from './components/Map/Map'
+import ProfilePage from './components/Profile/ProfilePage'
 import CountKiralik from './components/widget/CountKiralik';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -31,7 +33,6 @@ function App() {
       
        <BrowserRouter>
        <Navbar />
-       
          <Routes>
           <Route path="/EmlakListing" element={<EmlakListing />} />
           <Route path="*" element={<Navigate to="/EmlakListing" replace />} />  
@@ -42,6 +43,8 @@ function App() {
           <Route path="/EmlakAdd" element={<EmlakAdd />} />
           <Route path="/EmlakDetails/:emlakId" element={<EmlakDetails/>} />
           <Route path="/MapPage" element={<MapPage/>} />
+          <Route path="/Map" element={<Map/>} />
+          <Route path="/ProfilePage" element={<ProfilePage />} />
          </Routes>
        </BrowserRouter>
      

@@ -27,7 +27,13 @@ const NavbarV2 = () => {
             <Link className="nav-link" to="/ParametersAdd">Parameters</Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/MapPage">Map</Link>
+            <Link className="nav-link" to="/MapPage">MapPage</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/Map">Map</Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/ProfilePage">ProfilePage</Link>
           </li>
         </ul>
       </div>
