@@ -1,4 +1,5 @@
-﻿using EmlakOtomaston.Entity;
+﻿using EmlakOtomaston.DTO.EmlakDTO;
+using EmlakOtomaston.Entity;
 using bdto = EmlakOtomaston.DTO.BaseDTO;
 namespace EmlakOtomaston.DTO.EmlakciDTO
 {
@@ -6,7 +7,6 @@ namespace EmlakOtomaston.DTO.EmlakciDTO
     {
         public string Name { get; set; }
         public string Email { get; set; }
-
         public Emlakci ToEmlakci()
         {
             return new Emlakci

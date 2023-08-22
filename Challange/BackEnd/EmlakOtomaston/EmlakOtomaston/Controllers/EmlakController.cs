@@ -147,7 +147,8 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
                 .Include(emlak => emlak.Emlakci)
-                .Where(x => x.Id == id  && x.isAvailable).ToListAsync();
+                .Include(e => e.Images)
+                .Where(x => x.Id == id  && x.isAvailable ).ToListAsync();
 
             if (result == null)
             {

@@ -40,7 +40,16 @@ namespace EmlakOtomaston.Controllers
         [HttpGet]
         public async Task<IActionResult> GetById(int id)
         {
-            var result = await _emlakContext.Emlakcilar.Include(emlakci => emlakci.Emlaklar).SingleOrDefaultAsync(x => x.Id == id);
+            var result = await _emlakContext.Emlakcilar
+                .Include(emlakci => emlakci.Emlaklar)
+                    .ThenInclude(emlak => emlak.Images)
+                .Include(emlakci => emlakci.Emlaklar)
+                    .ThenInclude(emlak => emlak.Doviz)
+                .Include(emlakci => emlakci.Emlaklar)
+                    .ThenInclude(emlak => emlak.Durumu)
+                .Include(emlakci => emlakci.Emlaklar)
+                    .ThenInclude(emlak => emlak.Type)
+                .SingleOrDefaultAsync(x => x.Id == id);
 
             if (result != null)
                 return Ok(new EmlakciInfoDTO(result));
