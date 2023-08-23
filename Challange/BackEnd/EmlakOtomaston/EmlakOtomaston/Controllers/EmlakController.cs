@@ -32,6 +32,7 @@ namespace EmlakOtomaston.Controllers
                 Include(emlak => emlak.Durumu).
                 Include(emlak => emlak.Type)
                .Include(emlak => emlak.Emlakci).
+                Where(emlak => emlak.isAvailable).
                 ToListAsync();
 
             if (result == null)
@@ -225,6 +226,29 @@ namespace EmlakOtomaston.Controllers
             result.ForEach(book => emlakDetailsList.Add(new EmlakDetailsDTO(book)));
             return Ok(emlakDetailsList);
         }
+        [Authorize(Roles = UserRoles.Admin)]
+        [HttpGet]
+        [Route("byEmlakciId")]
+        public async Task<IActionResult> GetEmlakByEmlakciId(int emlakciId)
+        {
+            var result = await _emlakContext.Emlaklar
+                .Include(emlak => emlak.Doviz)
+                .Include(emlak => emlak.Durumu)
+                .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.Emlakci)
+                .Where(x => x.Emlakci.Id == emlakciId && x.isAvailable)
+                .ToListAsync();
+
+            if (result == null || result.Count == 0)
+            {
+                return NotFound();
+            }
+
+            var emlakDetailsList = new List<EmlakDetailsDTO>();
+            result.ForEach(book => emlakDetailsList.Add(new EmlakDetailsDTO(book)));
+            return Ok(emlakDetailsList);
+        }
+
 
         [Authorize(Roles = UserRoles.User)]
         [HttpGet]

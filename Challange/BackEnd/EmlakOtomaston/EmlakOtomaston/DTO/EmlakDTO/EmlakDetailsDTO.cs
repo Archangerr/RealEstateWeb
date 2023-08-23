@@ -29,6 +29,7 @@ namespace EmlakOtomaston.DTO.EmlakDTO
             EmlakciId = emlak.EmlakciId;
             Longitude = emlak.Longitude;
             Latitude = emlak.Latitude;
+            isAvailable = emlak.isAvailable;
             ImageBases = new List<string>();
 
             if (emlak.Images != null)

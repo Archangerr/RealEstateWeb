@@ -36,7 +36,7 @@ namespace EmlakOtomaston.Controllers
             return Ok(emlakciDetail);
         }
 
-        [Authorize(Roles = UserRoles.Admin)]
+        [Authorize(Roles = UserRoles.User)]
         [HttpGet]
         public async Task<IActionResult> GetById(int id)
         {

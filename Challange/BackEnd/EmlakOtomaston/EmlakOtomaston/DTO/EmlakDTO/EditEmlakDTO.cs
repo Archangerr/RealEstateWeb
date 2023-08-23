@@ -17,6 +17,8 @@ namespace EmlakOtomaston.DTO.EmlakDTO
         public List<string> ImageBases { get; set; }
         public double Latitude { get; set; } 
         public double Longitude { get; set; } 
+        public bool isAvailable { get; set; }
+
 
 
         public EditEmlakDTO()
@@ -36,7 +38,8 @@ namespace EmlakOtomaston.DTO.EmlakDTO
                 IlanBitis = this.IlanBitis,
                 EmlakciId = this.EmlakciId,
                 Latitude = this.Latitude,
-                Longitude = this.Longitude
+                Longitude = this.Longitude,
+                isAvailable = this.isAvailable
             };
             emlak.Images = new List<Image>();
 
