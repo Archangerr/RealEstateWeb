@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 export default function EmlakListing() 
 {
     const token = localStorage.getItem('userToken'); // Access the token
+    console.log("token emlak listing de", token);
     const [emlakList, setEmlakList] = useState([]);
     const [newEmlak, setnewEmlak] = useState("");
     const [title, setTitle] = useState('');

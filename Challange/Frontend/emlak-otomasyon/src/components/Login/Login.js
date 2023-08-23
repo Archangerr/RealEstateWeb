@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import './Login.css';
 import PropTypes from 'prop-types';
 import jwt_decode from 'jwt-decode';
+import {useAuth} from '../Login/AuthProvider';
 
 import { loginUser } from '../../services/loginService';
 
@@ -11,36 +12,53 @@ export default function Login({ setToken }) {
   const [username, setUserName] = useState();
   const [password, setPassword] = useState();
   const [emlakciIdv1, setEmlakciId] = useState();
+  //const { isAuthenticated, login, logout } = useAuth();
 
-  function decodeJWT(token) {
-    try {
-        const base64Url = token.split('.')[1];
-        const base64 = base64Url.replace('-', '+').replace('_', '/');
-        const payload = JSON.parse(window.atob(base64));
-        return payload;
-    } catch (error) {
-        console.error('Failed to decode token:', error);
-        return null;
-    }
-}
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const token = await loginUser({
+  //       username: username,
+  //       password: password,
+  //     });
+  //     setToken(token.token);
+  //     localStorage.setItem('userToken', token.token);
+  //     var decoded = jwt_decode(token.token);
+  //     let claimRole = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+
+  //     console.log("decoded",decoded);
+  //     let idValue = decoded.Id;
+  //     let isAdmin1 = false;
+  //     isAdmin1 = claimRole && claimRole.includes('Admin');
+  //     localStorage.setItem('isAdmin', isAdmin1);
+  //     localStorage.setItem('emlakciId', idValue);
+  //   } catch (error) {
+  //     console.error('Login failed:', error);
+
+  //   }
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const token = await loginUser({
-        username: username,
-        password: password,
-      });
-      setToken(token.token);
-      localStorage.setItem('userToken', token.token);
-      var decoded = jwt_decode(token.token);
-      let idValue = decoded.Id;
-      console.log("decoded",decoded);
-      localStorage.setItem('emlakciId', idValue);
-    } catch (error) {
-      console.error('Login failed:', error);
+        const token = await loginUser({
+            username: username,
+            password: password,
+        });
 
+        // Using the login function from the AuthContext
+        setToken(token.token);
+
+        var decoded = jwt_decode(token.token);
+        let claimRole = decoded["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        let idValue = decoded.Id;
+        let isAdmin1 = claimRole && claimRole.includes('Admin');
+        localStorage.setItem('isAdmin', isAdmin1);
+        localStorage.setItem('emlakciId', idValue);
+    } catch (error) {
+        console.error('Login failed:', error);
     }
-  };
+};
 
   return (
     <div className="login-wrapper">
@@ -62,6 +80,6 @@ export default function Login({ setToken }) {
   )
 }
 
-Login.propTypes = {
-  setToken: PropTypes.func.isRequired
-}
+// Login.propTypes = {
+//   setToken: PropTypes.func.isRequired
+// }

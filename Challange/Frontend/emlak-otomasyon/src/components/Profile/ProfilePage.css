@@ -18,3 +18,10 @@ ul {
 li {
     padding: 5px 0;
 }
+.second-img {
+    margin-top: 15px;
+    padding: 5px ;
+    display: block;
+    max-width: 35%; /* reduce to desired size */
+    /* margin: 0 auto; centers the image horizontally */
+}
