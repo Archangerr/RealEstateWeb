@@ -2,10 +2,11 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { GoogleMap, useJsApiLoader, Marker,InfoWindow  } from '@react-google-maps/api';
 import axios from 'axios';
 import { fetchEmlak } from '../../services/EmlakListingService';
+import './MapPage.css'
 
 const containerStyle = {
-    width: '100vw',
-    height: '100vh'
+    width: '98vw',
+    height: '80vh'
 };
 
 const center = {
@@ -48,7 +49,7 @@ function MapPage() {
         emlakObjects.forEach((emlak) => {
             bounds.extend({ lat: emlak.latitude, lng: emlak.longitude });
         });
-        map.fitBounds(bounds);
+       // map.fitBounds(bounds);
     }, [emlakObjects]);
 
      const [activeEmlak, setActiveEmlak] = useState(null);
@@ -65,7 +66,7 @@ function MapPage() {
         <GoogleMap
             mapContainerStyle={containerStyle}
             center={center}
-            zoom={10}
+            zoom={8}
             onLoad={onLoad}
         >
             {emlakObjects.map((emlak, index) => (

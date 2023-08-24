@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Navigate } from "react-router-dom";
 import './ProfilePage.css';
-import { fetchProfile } from '../../services/ProfileService';
+import { fetchProfile, deleteEmlak } from '../../services/ProfileService';
 import Map from '../Map/Map';
 import { Link } from "react-router-dom";
 function ProfilePage() {
     const { emlakciId } = useParams();
     const [emlakci, setEmlakci] = useState(null);
+    const [refresh, setRefresh] = useState(1);
 
     const isAdmin = localStorage.getItem('isAdmin') === 'true'; // assuming `isAdmin` is stored as a string
     const storedEmlakciId = localStorage.getItem('emlakciId'); // get the emlakciId from local storage
 
-    const hasAccess = isAdmin || storedEmlakciId === emlakciId;
+    const hasAccess = isAdmin || (String(storedEmlakciId) === String(emlakciId));
 
 
     console.log("emlakciId", emlakciId);
@@ -36,8 +37,16 @@ function ProfilePage() {
 
     useEffect(() => {
         fetchData();
-    }, [emlakciId]);
+    }, [emlakciId,refresh]);
 
+    const handleDelete = async (id) => {
+        try {
+            deleteEmlak(id);
+            refresh++;
+        } catch (error) {
+            console.error("Error fetching Emlak data:", error);
+        }
+    }
     // useEffect(() => {
     //     if (props.emlakciId && props.emlakciId !== emlakciId) {
     //         setEmlakciId(props.emlakciId);
@@ -92,8 +101,9 @@ function ProfilePage() {
                                                 <Link to={`/EmlakEdit/${emlak.id}`}>
                                                     Edit
                                                 </Link>
-                                                <button>
-
+                                                <button onClick={e=>handleDelete(emlak.id)}
+                                                className="btn btn-danger btn-sm">
+                                                    Delete Emlak
                                                 </button>
 
                                             </div>
@@ -138,8 +148,9 @@ function ProfilePage() {
                                                 <Link to={`/EmlakEdit/${emlak.id}`}>
                                                     Edit
                                                 </Link>
-                                                <button>
-
+                                                <button onClick={e=>handleDelete(emlak.id)}
+                                                className="btn btn-danger btn-sm">
+                                                    Delete Emlak
                                                 </button>
 
                                             </div>

@@ -149,7 +149,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Type)
                 .Include(emlak => emlak.Emlakci)
                 .Include(e => e.Images)
-                .Where(x => x.Id == id  && x.isAvailable ).ToListAsync();
+                .Where(x => x.Id == id ).ToListAsync();
 
             if (result == null)
             {
@@ -236,7 +236,7 @@ namespace EmlakOtomaston.Controllers
                 .Include(emlak => emlak.Durumu)
                 .Include(emlak => emlak.Type)
                 .Include(emlak => emlak.Emlakci)
-                .Where(x => x.Emlakci.Id == emlakciId && x.isAvailable)
+                .Where(x => x.Emlakci.Id == emlakciId)
                 .ToListAsync();
 
             if (result == null || result.Count == 0)
@@ -319,6 +319,24 @@ namespace EmlakOtomaston.Controllers
                 
                 var result = await _emlakContext.SaveChangesAsync();
                 return Ok(new EmlakDetailsDTO(item));
+            }
+            return NotFound();
+        }
+        [Authorize(Roles = UserRoles.User)]
+        [HttpPost]
+        public async Task<IActionResult> AddAgain(int id)
+        {
+            var item = await _emlakContext.Emlaklar
+                .Include(emlak => emlak.Doviz)
+                .Include(emlak => emlak.Durumu)
+                .Include(emlak => emlak.Type)
+                .Include(emlak => emlak.Emlakci)
+                .SingleOrDefaultAsync(x => x.Id == id);
+            if (item != null)
+            {
+                item.isAvailable = true;
+                await _emlakContext.SaveChangesAsync();
+                return NoContent();
             }
             return NotFound();
         }

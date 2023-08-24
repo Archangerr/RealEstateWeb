@@ -78,19 +78,6 @@ export const fetchById = async (emlakId, config) => {
   }
 }
 
-export const deleteEmlak = async (emlakId,config) => {
-  try {
-      const response = await axios.delete(`http://localhost:5218/Emlak/byId?id=${emlakId}`,config);
-      if (response.status === 204) {
-          alert('Emlak marked as unavailable successfully!');
-      } else {
-          alert('Failed to delete emlak.');
-      }
-  } catch (error) {
-      console.error("Error deleting emlak:", error);
-      alert('Failed to delete emlak. Please try again.');
-  }
-};
 
 export async function addDoviz(dovizData, config) {
   try {

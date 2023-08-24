@@ -17,3 +17,17 @@ export async function fetchProfile(emlakciId) {
       console.error("Error fetching profile:", error);
     }
   }
+
+  export const deleteEmlak = async (emlakId) => {
+    try {
+        const response = await axios.delete(`http://localhost:5218/Emlak/?id=${emlakId}`,config);
+        if (response.status === 204) {
+            alert('Emlak marked as unavailable successfully!');
+        } else {
+            alert('Failed to delete emlak.');
+        }
+    } catch (error) {
+        console.error("Error deleting emlak:", error);
+        alert('Failed to delete emlak. Please try again.');
+    }
+  };
