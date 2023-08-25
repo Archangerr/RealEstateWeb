@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, Navigate } from "react-router-dom";
 import './ProfilePage.css';
-import { fetchProfile, deleteEmlak } from '../../services/ProfileService';
+import { fetchProfile, deleteEmlak,addEmlak } from '../../services/ProfileService';
 import Map from '../Map/Map';
 import { Link } from "react-router-dom";
 function ProfilePage() {
@@ -35,14 +35,21 @@ function ProfilePage() {
     }
 
 
-    useEffect(() => {
-        fetchData();
-    }, [emlakciId,refresh]);
+
 
     const handleDelete = async (id) => {
         try {
             deleteEmlak(id);
-            refresh++;
+            setRefresh(prevState => prevState + 1);
+        } catch (error) {
+            console.error("Error fetching Emlak data:", error);
+        }
+    }
+
+    const handleAdd = async (id) => {
+        try {
+            addEmlak(id);
+            setRefresh(prevState => prevState + 1);
         } catch (error) {
             console.error("Error fetching Emlak data:", error);
         }
@@ -52,6 +59,10 @@ function ProfilePage() {
     //         setEmlakciId(props.emlakciId);
     //     }
     // }, [props.emlakciId]);
+
+    useEffect(() => {
+        fetchData();
+    }, [emlakciId,refresh]);
 
 
     return (
@@ -148,9 +159,9 @@ function ProfilePage() {
                                                 <Link to={`/EmlakEdit/${emlak.id}`}>
                                                     Edit
                                                 </Link>
-                                                <button onClick={e=>handleDelete(emlak.id)}
-                                                className="btn btn-danger btn-sm">
-                                                    Delete Emlak
+                                                <button onClick={e=>handleAdd(emlak.id)}
+                                                className="btn btn-success btn-sm">
+                                                    Add Emlak
                                                 </button>
 
                                             </div>

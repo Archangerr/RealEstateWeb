@@ -1,11 +1,11 @@
 import React, { useEffect, useState, useContext, useMemo } from 'react';
 import { addNewEmlak, fetchDoviz, fetchEmlakDurumu, fetchEmlakType } from '../../services/EmlakListingService';
 import { getDurumu, getDoviz, getType } from '../../services/ParameterService';
-import getConfig from '../../components/Config/apiConfig';
+import getConfig from '../Config/apiConfig';
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap,  } from "react-google-maps"
 import { GoogleMap, useJsApiLoader, Marker } from '@react-google-maps/api';
-import  MyComponent  from '../../components/Map/MapAdd';
+import  MyComponent  from '../Map/MapAdd';
 //import MyMapComponent from '../../components/EmlakListing/MyMapComponent';
 
 

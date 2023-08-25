@@ -40,7 +40,7 @@ function EditEmlak() {
         setFiyat(data.fiyat);
         setIlanTarihi(data.ilanTarihi);
         setIlanBitis(data.ilanBitis);
-        setImg4(data.imageBase);
+        setImg4(data.imageBases);
     }
     useEffect(() => {
         getDoviz(config).then(data => {
@@ -132,11 +132,30 @@ function EditEmlak() {
         return formattedDate;
     };
 
+    const deleteImage = (index) => {
+        const newImages = img64.filter((_, imgIndex) => imgIndex !== index);
+        setImg4(newImages);
+    };
+    const handleImageUpload = (e) => {
+        const files = e.target.files;
+        const updatedImages = [...img64];
+    
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onloadend = () => {
+                updatedImages.push(reader.result.split(',')[1]); // store only the base64 representation
+                setImg4(updatedImages);
+            };
+            reader.readAsDataURL(file);
+        });
+    };
+
     useEffect(() => {
         getDoviz();
         getType();
         getDurumu();
     }, []);
+
 
     const isAdmin = localStorage.getItem('isAdmin') === 'true'; // assuming `isAdmin` is stored as a string
     const storedEmlakciId = localStorage.getItem('emlakciId'); // get the emlakciId from local storage
@@ -144,7 +163,7 @@ function EditEmlak() {
     console.log("emlakciId", emlakciId);
     const hasAccess = isAdmin || (String(storedEmlakciId) === String(emlakciId));
     console.log("hasAccess", hasAccess);
-
+    console.log("imgae is here", img64);
 
 
     return (
@@ -210,6 +229,18 @@ function EditEmlak() {
                         onChange={e => setIlanBitis(e.target.value)}
                     />
                 </label>
+                
+                            
+                <div>
+                    {img64.map((imageBase, index) => (
+                        <div key={index}>
+                            <img src={`data:image/png;base64,${imageBase}`} alt={`emlak-image-${index}`} width={100} />
+                            <button onClick={() => deleteImage(index)}>Delete</button>
+                        </div>
+                    ))}
+                </div>
+
+                <input type="file" multiple onChange={handleImageUpload} />
 
                 <br />
                 <button onClick={updateEmlak}>update Emlak</button>

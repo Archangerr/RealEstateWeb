@@ -40,7 +40,6 @@ function App() {
   console.log("isAuthenticated app js ici", isAuthenticated);
   if (!isAuthenticated) {
     return (
-      // <AuthProvider>
         <Login setToken={login} />
     );
   }

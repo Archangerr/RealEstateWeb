@@ -31,3 +31,20 @@ export async function fetchProfile(emlakciId) {
         alert('Failed to delete emlak. Please try again.');
     }
   };
+
+  export const addEmlak = async (emlakId) => {
+    try {
+
+        console.log("emlakId",emlakId);
+        console.log("config",config);
+        const response = await axios.put(`http://localhost:5218/Emlak/byAvaible?id=${emlakId}`,config);
+        if (response.status === 204) {
+            alert('Emlak added successfully!');
+        } else {
+            alert('Failed to add emlak.');
+        }
+    } catch (error) {
+        console.error("Error adding emlak:", error);
+        alert('Failed to add emlak. Please try again.');
+    }
+  }
