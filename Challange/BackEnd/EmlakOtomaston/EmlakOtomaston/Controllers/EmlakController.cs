@@ -323,8 +323,9 @@ namespace EmlakOtomaston.Controllers
             return NotFound();
         }
         [Authorize(Roles = UserRoles.User)]
-        [HttpPost]
-        public async Task<IActionResult> AddAgain(int id)
+        [HttpPut]
+        [Route("byAvaible")]
+        public async Task<IActionResult> PutAvaible(int id)
         {
             var item = await _emlakContext.Emlaklar
                 .Include(emlak => emlak.Doviz)
